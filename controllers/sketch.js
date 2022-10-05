@@ -6,7 +6,7 @@ const User = require("../models/user");
 const getTokenFromReq = (request) => {
     const auth = request.get("authorization");
 
-    if(auth && auth.toLowerCase().stratsWith('bearer ')) {
+    if(auth && auth.toLowerCase().startsWith('bearer ')) {
         return auth.substring(7);
     }
 
@@ -19,7 +19,7 @@ sketchRouter.post("/", async (request, response) => {
     const token = getTokenFromReq(request);
     const decodeToken = jwt.verify(token, process.env.SECRET);
 
-    if(decodeToken.id) {
+    if(!decodeToken.id) {
         return response(401).json({error: "Token missing or invalid"});
     }
 
@@ -35,3 +35,5 @@ sketchRouter.post("/", async (request, response) => {
 
     response.json(savedSketch);
 });
+
+module.exports = sketchRouter;
