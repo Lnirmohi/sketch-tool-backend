@@ -3,7 +3,8 @@ const express = require('express');
 const cors = require('cors');
 const Sketch = require('./models/sketch');
 const usersRouter = require('./controllers/users');
-const loginRuter = require('./controllers/login')
+const loginRuter = require('./controllers/login');
+const sketchRouter = require("./controllers/sketch");
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(express.json());
 
 app.use('/api/users', usersRouter);
 app.use('/api/login', loginRuter);
+app.use('/api/sketch', sketchRouter);
 
 app.get('/', (request, response) => {
     response.send('<h1>Hello World!</h1>')
