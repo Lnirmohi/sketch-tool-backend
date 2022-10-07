@@ -4,14 +4,14 @@ const User = require('../models/user');
 
 usersRouter.post('/', async (request, response) => {
     
-    const { username, name, password } = request.body;
+    const { firstName, lastName, email, password } = request.body;
 
-    const existingUser = await User.findOne({username});
+    const existingUser = await User.findOne({email});
 
     if(existingUser) {
         
         return response.status(400).json({
-            error: "username already taken"
+            error: "email already in use"
         });
     }
 
@@ -19,9 +19,7 @@ usersRouter.post('/', async (request, response) => {
     const passwordHash = await bcrypt.hash(password, saltRounds);
 
     const user = new User({
-        username,
-        name,
-        passwordHash,
+        firstName, lastName, email, passwordHash
     });
 
     const savedUser = await user.save();
