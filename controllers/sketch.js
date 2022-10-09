@@ -26,11 +26,12 @@ sketchRouter.post("/", async (request, response) => {
     const user = await User.findById(decodeToken.id);
 
     const sketch = new Sketch({
-        name: body.name
+        imgData: body.imgData,
+        user: user._id
     });
 
     const savedSketch = await sketch.save();
-    user.sketches.concat(savedSketch._id);
+    user.sketches = user.sketches.concat(savedSketch._id);
     await user.save();
 
     response.json(savedSketch);
