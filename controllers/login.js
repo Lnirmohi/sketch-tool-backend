@@ -7,7 +7,7 @@ loginRouter.post("/", async (request, response) => {
     
     const { email, password } = request.body;
 
-    const user = await User.findOne({email});
+    const user = await User.findOne({email}).populate('sketches');
     const passwordMatch = user === null 
         ? false 
         : await bcrypt.compare(password, user.passwordHash);
@@ -27,7 +27,7 @@ loginRouter.post("/", async (request, response) => {
 
     response
         .status(200)
-        .send({token, email: user.email, firstName: user.firstName, lastName: user.lastName});
+        .send({token, email: user.email, firstName: user.firstName, lastName: user.lastName, sketches: user.sketches});
 })
 
 module.exports = loginRouter;
