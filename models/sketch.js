@@ -10,13 +10,11 @@ mongoose.connect(url)
   });
 
 const sketchSchema = new mongoose.Schema({
-    name: String,
-    users: [
-        {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'User'
-        }
-      ],
+    imgData: {
+      data: Buffer,
+      type: String
+    },
+    user: mongoose.Schema.Types.ObjectId,
 });
 
 sketchSchema.set('toJSON', {
