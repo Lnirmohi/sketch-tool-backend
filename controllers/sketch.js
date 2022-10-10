@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
 const Sketch = require("../models/sketch");
 const sketchRouter = require("express").Router();
 const User = require("../models/user");
@@ -26,6 +27,7 @@ sketchRouter.post("/", async (request, response) => {
     const user = await User.findById(decodeToken.id);
 
     const sketch = new Sketch({
+        name: body.name || `${user.firstName}-sketch-${crypto.randomBytes(10).toString('hex')}`,
         imgData: body.imgData,
         user: user._id
     });
