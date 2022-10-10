@@ -10,6 +10,7 @@ mongoose.connect(url)
   });
 
 const sketchSchema = new mongoose.Schema({
+    name: String,
     imgData: {
       data: Buffer,
       type: String
